@@ -20,7 +20,7 @@
 
 const articleParent = document.querySelector('.cards-container')
 
-function createCard(articleHeadline, authorImg, authorName) {
+function createCard(articleHeadline, authorImg, authorName, topic) {
     const card = document.createElement('div'),
         headline = document.createElement('headline'),
         author = document.createElement('div'),
@@ -34,7 +34,7 @@ function createCard(articleHeadline, authorImg, authorName) {
     author.appendChild(authorsName)
     imgContainer.appendChild(img)
     
-    card.classList.add('card')
+    card.classList.add('card', 'filter', topic)
     headline.classList.add('headline')
     author.classList.add('author')
     imgContainer.classList.add('img-container')
@@ -60,22 +60,22 @@ axios.get('https://lambda-times-backend.herokuapp.com/articles').then(res => {
     articlesNode = res.data.articles.node
 
     articlesJavascript.forEach(el => {
-        articleParent.appendChild(createCard(el.headline, el.authorPhoto, el.authorName))
+        articleParent.appendChild(createCard(el.headline, el.authorPhoto, el.authorName, 'javascript'))
     });
 
     articlesBootstrap.forEach(el => {
-        articleParent.appendChild(createCard(el.headline, el.authorPhoto, el.authorName))
+        articleParent.appendChild(createCard(el.headline, el.authorPhoto, el.authorName, 'bootstrap'))
     });
 
     articlesTechnology.forEach(el => {
-        articleParent.appendChild(createCard(el.headline, el.authorPhoto, el.authorName))
+        articleParent.appendChild(createCard(el.headline, el.authorPhoto, el.authorName, 'technology'))
     });
 
     articlesJQuery.forEach(el => {
-        articleParent.appendChild(createCard(el.headline, el.authorPhoto, el.authorName))
+        articleParent.appendChild(createCard(el.headline, el.authorPhoto, el.authorName, 'jquery'))
     });
 
     articlesNode.forEach(el => {
-        articleParent.appendChild(createCard(el.headline, el.authorPhoto, el.authorName))
+        articleParent.appendChild(createCard(el.headline, el.authorPhoto, el.authorName, 'node'))
     });
 })
