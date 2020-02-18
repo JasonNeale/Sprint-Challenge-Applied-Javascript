@@ -17,3 +17,65 @@
 // </div>
 //
 // Create a card for each of the articles and add the card to the DOM.
+
+const articleParent = document.querySelector('.cards-container')
+
+function createCard(articleHeadline, authorImg, authorName, topic) {
+    const card = document.createElement('div'),
+        headline = document.createElement('headline'),
+        author = document.createElement('div'),
+        imgContainer = document.createElement('div'),
+        img = document.createElement('img'),
+        authorsName = document.createElement('span')
+    
+    card.appendChild(headline)
+    card.appendChild(author)
+    author.appendChild(imgContainer)
+    author.appendChild(authorsName)
+    imgContainer.appendChild(img)
+    
+    card.classList.add('card', 'filter', topic)
+    headline.classList.add('headline')
+    author.classList.add('author')
+    imgContainer.classList.add('img-container')
+
+    headline.textContent = articleHeadline
+    img.src = authorImg
+    authorsName.textContent = authorName
+
+    return card
+}
+
+let articlesJavascript = []
+let articlesBootstrap = []
+let articlesTechnology = []
+let articlesJQuery = []
+let articlesNode = []
+
+axios.get('https://lambda-times-backend.herokuapp.com/articles').then(res => {
+    articlesJavascript = res.data.articles.javascript
+    articlesBootstrap = res.data.articles.bootstrap
+    articlesTechnology = res.data.articles.technology
+    articlesJQuery = res.data.articles.jquery
+    articlesNode = res.data.articles.node
+
+    articlesJavascript.forEach(el => {
+        articleParent.appendChild(createCard(el.headline, el.authorPhoto, el.authorName, 'javascript'))
+    });
+
+    articlesBootstrap.forEach(el => {
+        articleParent.appendChild(createCard(el.headline, el.authorPhoto, el.authorName, 'bootstrap'))
+    });
+
+    articlesTechnology.forEach(el => {
+        articleParent.appendChild(createCard(el.headline, el.authorPhoto, el.authorName, 'technology'))
+    });
+
+    articlesJQuery.forEach(el => {
+        articleParent.appendChild(createCard(el.headline, el.authorPhoto, el.authorName, 'jquery'))
+    });
+
+    articlesNode.forEach(el => {
+        articleParent.appendChild(createCard(el.headline, el.authorPhoto, el.authorName, 'node'))
+    });
+})
